@@ -1,34 +1,25 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import SearchComponent from './components/SearchComponent';
+import ResultComponent from './components/ResultComponent';
+import useAPIHook from './components/useAPIHook';
 
+
+interface Item {
+  id: number;
+  name: string;
+  url: string;
+  alt_text: string;
+}
 function App() {
-  const [count, setCount] = useState(0)
+  const [url, setUrl] = useState<string>('');
+  const { data, error, loading } = useAPIHook<Record<string, any>>(url);
+ 
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p className='text-3xl font-bold underline'>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="w-screen inset-0 -z-10 h-screen items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] items-center">
+    <SearchComponent className="self-start" onSubmit={setUrl} /> 
+    <ResultComponent data={data} error={error} loading={loading}  />
+  </div>
   )
 }
 
