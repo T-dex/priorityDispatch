@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 interface SearchComponentProps {
   onSubmit: (url: string) => void;
+  className: string;
 }
 
 const SearchComponent: React.FC<SearchComponentProps> = ({ onSubmit }) => {
@@ -28,7 +29,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onSubmit }) => {
 
   return (
     <div className='flex items-center justify-between w-full gap-4 sticky top-0 left-0'>
-    <h1>Giph Finder</h1>
+    <h1>Giphy Finder</h1>
     <form onSubmit={handleSubmit} className='flex gap-4 rounded-b-md'>
       <input
         type="text"

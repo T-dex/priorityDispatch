@@ -1,29 +1,28 @@
+import { Key } from "react";
+import ItemComponent from "./ItemComponent";
 
 interface Data{
-  length: number;
-  data:Array<string>
-  }
+  length: string[] ;
+  data: Array<object>;
+  
+}
+  
 interface ResultComponentProps {
-  data: Data[];
-  error: string | null;
+  data: Array<Data> | null;
+  error: string | null | undefined;
   loading: boolean;
 }
 
-const ResultComponent = <T extends string | undefined,>({ data, error, loading }: ResultComponentProps) => {
-  if (loading) return <p className="flex justify-center items-center max-h-full">Loading...</p>;
+const ResultComponent = ({ data, error, loading }: ResultComponentProps) => {
+  console.log(data)
+
+  if (loading) return <p className="flex justify-center items-center h-screen">Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  if (!data || data.length === 0) return <p>No data available</p>;
+  if (!data || data?.data.length === 0) return <p className="flex justify-center items-center h-screen">No data available</p>;
 
-  const giphyData = Object.keys(data).map(keys => data[keys])
+  const giphyData:Array<Data> | number = (Object.keys(data)as Array<keyof typeof data>).map(keys => data[keys])
   return (
-    <div className="inline-flex overflow-y-scroll justify-center max-h-full w-full">
-
-    <ul className="inline-flex flex-col wrap items-center gap-6">
-      {giphyData[0].map((item: { alt_text:T, url: T; images:string }, index: Key | null | undefined) => (
-        <li className="inline-block mr-50" key={index}><video className='w-50 aspect-square rounded-2xl ' src={item.images.looping.mp4}></video></li>
-      ))}
-    </ul>
-  </div>
+    <ItemComponent data={giphyData[0]}/>
   );
 };
 
